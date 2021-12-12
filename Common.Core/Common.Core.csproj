@@ -1,7 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <Company>Ali GÜDER</Company>
+    <Authors>Ali GÜDER</Authors>
+    <Description>.Net ile ilgili temel işlemler</Description>
   </PropertyGroup>
 
 </Project>

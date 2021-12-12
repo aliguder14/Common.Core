@@ -1,20 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Globalization;
 
 namespace Common.Core
 {
     public static class DateTimeExtensions
     {
-        public static int GetCentury(this ref DateTime dt)
+        public static int GetCentury(this DateTime dt)
         {
 
             return (dt.Year / 100) + 1;
         }
 
-        public static int GetBininciYil(this DateTime dt)
+        public static int GetThousandYear(this DateTime dt)
         {
 
             return (dt.Year / 1000) + 1;
@@ -31,6 +28,32 @@ namespace Common.Core
         {
 
             return dt.DayOfWeek == DayOfWeek.Sunday ? 7 : ((int)dt.DayOfWeek);
+        }
+
+        public static DateTime AddWeeks(this DateTime dt, double days)
+        {
+
+            return dt.AddDays(days * 7);
+        }
+
+        public static string GetMothnName(this DateTime dt)
+        {
+            return dt.ToString("MMMM");
+        }
+
+        public static string GetMonthName(this DateTime dt, CultureInfo cultureInfo)
+        {
+            return cultureInfo.DateTimeFormat.GetMonthName(dt.Month);
+        }
+
+        public static string GetWeekName(this DateTime dt)
+        {
+            return dt.ToString("dddd");
+        }
+
+        public static string GetWeekName(this DateTime dt, CultureInfo cultureInfo)
+        {
+            return cultureInfo.DateTimeFormat.GetDayName(dt.DayOfWeek);
         }
     }
 }

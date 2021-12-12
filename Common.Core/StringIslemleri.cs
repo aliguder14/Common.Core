@@ -1,11 +1,8 @@
-﻿using Common.Core.HelperClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Common.Core
 {
@@ -177,7 +174,7 @@ namespace Common.Core
 
         }
 
-        public static string Degistir(string metin, char eskiDeger, char yeniDeger)
+        public static string Replace(string metin, char eskiDeger, char yeniDeger)
         {
             char[] metinKarakterleri = metin.ToCharArray();
 
@@ -193,7 +190,7 @@ namespace Common.Core
             return new string(metinKarakterleri);
         }
 
-        public static bool IceriyorMu(string metin, string arananDeger)
+        public static bool Contains(string metin, string arananDeger)
         {
 
             if (metin.Length < arananDeger.Length)
@@ -320,7 +317,7 @@ namespace Common.Core
 
         }
 
-        public static string Degistir(string metin, string eskiDeger, string yeniDeger)
+        public static string Replace(string metin, string eskiDeger, string yeniDeger)
         {
             int yeniDegerUzunlugu = yeniDeger.Length;
             if (metin.Length < eskiDeger.Length || metin.Length < yeniDeger.Length)
@@ -433,7 +430,7 @@ namespace Common.Core
             return true;
         }
 
-        public static string[] KelimelereAyir(string metin)
+        public static string[] Split(string metin)
         {
 
             char[] ayracKarakterler = new char[] { '.', ':', ';', ',', '/', '\n', '\t', '?', '\\', ' ' };
@@ -617,7 +614,7 @@ namespace Common.Core
         }
 
 
-        
+
 
     }
 }

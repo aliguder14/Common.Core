@@ -1,10 +1,7 @@
-﻿using Common.Core.HelperClasses;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Common.Core
 {
@@ -481,7 +478,7 @@ namespace Common.Core
         public static double DortIslemSonucunuDondur(string islem)
         {
 
-            char[] toplamaCikarmaIslemAyraclari = new char[] { '+', '-'};
+            char[] toplamaCikarmaIslemAyraclari = new char[] { '+', '-' };
             char[] carpmaBolmeIslemAyraclari = new char[] { '*', '/', '%' };
             List<string> subOperands;
             List<char> delimtersInCaprmaBolme;
@@ -495,7 +492,7 @@ namespace Common.Core
             //               .ToArray();
 
 
-            
+
 
             //string[] operands = islem.Split(new string[] { "+","-"},StringSplitOptions.None).Select(p => p.Trim())
             //               .Where(p => !string.IsNullOrWhiteSpace(p))
@@ -533,7 +530,7 @@ namespace Common.Core
             //delimtersInIslemSiralanmis.Sort();
 
             string sonucIfade = operands[0];
-            
+
             if (!double.TryParse(sonucIfade, out double sonuc))
             {
                 if (sonucIfade.StartsWith('(') && sonucIfade.EndsWith(')'))
@@ -564,11 +561,11 @@ namespace Common.Core
                         subSonuc = islemTanimlari[delimtersInCaprmaBolme[j]].Invoke(subSonuc, deger);
                     }
 
-                    sonuc = subSonuc; 
+                    sonuc = subSonuc;
                 }
             }
 
-            for (int i = 0; i < operands.Count-1; i++)
+            for (int i = 0; i < operands.Count - 1; i++)
             {
                 sonucIfade = operands[i + 1];
                 if (!double.TryParse(operands[i + 1], out double deger))
@@ -600,7 +597,7 @@ namespace Common.Core
                             subSonuc = islemTanimlari[delimtersInCaprmaBolme[j]].Invoke(subSonuc, subdeger);
                         }
 
-                        deger = subSonuc; 
+                        deger = subSonuc;
                     }
                 }
 

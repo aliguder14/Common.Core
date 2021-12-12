@@ -18,10 +18,10 @@ namespace Common.Core
             foreach (var item in liste)
             {
                 action.Invoke(item);
-            }           
+            }
         }
-        
-        public static IEnumerable<T> Select<TSource,T>(this IEnumerable<TSource> liste, Func<TSource,T> selector)
+
+        public static IEnumerable<T> Select<TSource, T>(this IEnumerable<TSource> liste, Func<TSource, T> selector)
         {
 
             foreach (var item in liste)
@@ -41,7 +41,7 @@ namespace Common.Core
                 }
             }
 
-            
+
         }
 
         public static List<T> ToList<T>(this IEnumerable<T> liste)
@@ -129,16 +129,16 @@ namespace Common.Core
                     {
                         if (property.PropertyType == dataRow[dataColumn.ColumnName].GetType())
                         {
-                            property.SetValue(item, dataRow[dataColumn.ColumnName]); 
+                            property.SetValue(item, dataRow[dataColumn.ColumnName]);
                         }
                     }
 
-                    
+
                 }
 
                 if (dt.Columns.Count > 0)
                 {
-                    liste.Add(item); 
+                    liste.Add(item);
                 }
             }
 
@@ -175,7 +175,7 @@ namespace Common.Core
             return dt;
         }
 
-        public static string StringJoin<T>(this IEnumerable<T> liste,string ayrac)
+        public static string StringJoin<T>(this IEnumerable<T> liste, string ayrac)
         {
             StringBuilder sb = new StringBuilder();
             IEnumerator<T> rc = liste.GetEnumerator();
@@ -186,7 +186,7 @@ namespace Common.Core
             while (rc.MoveNext())
             {
                 sb.Append($"{ayrac} {rc.Current.ToString()}");
-                
+
             }
 
             return sb.ToString();

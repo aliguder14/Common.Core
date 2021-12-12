@@ -3,8 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Common.Core
 {
@@ -230,7 +228,7 @@ namespace Common.Core
         public static bool SequentialEqual<T>(IEnumerable<T> liste1, IEnumerable<T> liste2)
         {
             T[] arr1 = (liste1 is T[]) ? (T[])liste1 : liste1.ToArray();
-            
+
             int i = 0;
             foreach (var item2 in liste2)
             {
