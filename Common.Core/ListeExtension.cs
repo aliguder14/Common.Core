@@ -192,5 +192,22 @@ namespace Common.Core
             return sb.ToString();
 
         }
+
+        public static List<List<T>> Chunk<T>(this IEnumerable<T> list,int size)
+        {
+
+            int dividenSize = list.Count() / size;
+            List<List<T>> newList = new List<List<T>>();
+            int skippedSize = 0;
+            for (int i = 0; i < dividenSize; i++)
+            {
+                newList.Add(list.Skip(skippedSize).Take(size).ToList());
+                skippedSize++;
+            }
+
+            return newList;
+        }
+
+        
     }
 }

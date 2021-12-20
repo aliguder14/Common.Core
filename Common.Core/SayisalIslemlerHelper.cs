@@ -148,23 +148,22 @@ namespace Common.Core
             return sonuc;
         }
 
-        public static bool AsalSayiMi(int number)
+        public static int AsalSayiMi(long n)
         {
-
-            if (number == 0 || number == 1)
+            if (n == 0 || n == 1)
             {
-                return false;
+                return (int)n;
             }
 
-            for (int i = 2; i <= number / 2; i++)
+            for (int i = 2; i <= n / 2; i++)
             {
-                if (number % i == 0)
+                if (n % i == 0)
                 {
-                    return false;
+                    return i;
                 }
             }
 
-            return true;
+            return 1;
         }
 
         public long FibonacciSayiAl(uint siraNo)
@@ -287,35 +286,66 @@ namespace Common.Core
             return tersCevrilenSayi;
         }
 
-        public static List<string> FizzBuzzListesiGetir(IEnumerable<int> sayilar)
+        public static void FizzBuzzListesiGetir(IEnumerable<int> sayilar)
         {
             List<string> fizzBuzzListesi = new List<string>();
             foreach (int sayi in sayilar)
             {
                 if (sayi % 3 == 0)
                 {
-                    fizzBuzzListesi.Add($"{sayi} FIZZ");
+                    Console.WriteLine($"{sayi} FIZZ");
                 }
 
                 else if (sayi % 5 == 0)
                 {
-                    fizzBuzzListesi.Add($"{sayi} BUZZ");
+                    Console.WriteLine($"{sayi} BUZZ");
                 }
 
                 if (sayi % 15 == 0)
                 {
-                    fizzBuzzListesi.Add($"{sayi} FIZZBUZZ");
+                    Console.WriteLine($"{sayi} FIZZBUZZ");
                 }
 
                 else
                 {
-                    fizzBuzzListesi.Add($"{sayi} ");
+                    Console.WriteLine($"{sayi} ");
 
                 }
             }
 
-            return fizzBuzzListesi;
+            
         }
+
+        public static void fizzBuzz(int n)
+        {
+            List<string> fizzBuzzListesi = new List<string>();
+            for(int sayi=0; sayi<= n; sayi++ )
+            {
+                if (sayi % 3 == 0)
+                {
+                    Console.WriteLine($"{sayi} Fizz");
+                }
+
+                else if (sayi % 5 == 0)
+                {
+                    Console.WriteLine($"{sayi} Buzz");
+                }
+
+                else if (sayi % 15 == 0)
+                {
+                    Console.WriteLine($"{sayi} FizzBuzz");
+                }
+
+                else
+                {
+                    Console.WriteLine($"{sayi}");
+
+                }
+            }
+
+
+        }
+
 
 
         public static long OndalikTabanaCevir(long num, int taban)
