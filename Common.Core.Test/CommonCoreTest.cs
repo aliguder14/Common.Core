@@ -437,6 +437,7 @@ namespace Common.Core.Test
         public void ValidLongTCKN(long tckn, bool expectedValue)
         {
             Assert.Equal(expectedValue, ValidationIslemleri.ValidTCKN(tckn));
+
         }
 
 

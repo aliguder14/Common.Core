@@ -11,6 +11,7 @@ namespace Common.Core.Test
         public int X { get; set; }
         public int Y { get; set; }
 
+
         
     }
 }
