@@ -424,6 +424,7 @@ namespace Common.Core.Test
         public void ValidTCKN(string tckn, bool expectedValue)
         {
             Assert.Equal(expectedValue,ValidationIslemleri.ValidTCKN(tckn));
+
         }
 
         [Theory]
