@@ -121,7 +121,7 @@ namespace Common.Core
                 char ch = metinKarakterleri[i];
                 if ((ch >= 'A' && ch <= 'Z') && ch != 'I')
                 {
-                    metinKarakterleri[i] = (char)(ch - 32);
+                    metinKarakterleri[i] = (char)(ch + 32);
                 }
 
                 else
@@ -613,8 +613,229 @@ namespace Common.Core
 
         }
 
+        public static string GetUpperCaseLetters()
+        {
+
+            StringBuilder sb = new StringBuilder();
+            for (char ch = 'A'; ch <= 'Z'; ch = (char)(ch + 1))
+            {
+                sb.Append(ch);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string GetLowerCaseLetters()
+        {
+
+            StringBuilder sb = new StringBuilder();
+            for (char ch = 'a'; ch <= 'z'; ch = (char)(ch + 1))
+            {
+                sb.Append(ch);
+            }
+
+            return sb.ToString();
+        }
+
+        public static string GetTurkishUpperCaseLetters()
+        {
+
+            StringBuilder sb = new StringBuilder();
+
+            Dictionary<char, Action> turkishLetterAppendOperations = new()
+            {
+                { 'C', () => sb.Append('Ç') },
+                { 'G', () => sb.Append('Ğ') },
+                { 'I', () => sb.Append('İ') },
+                { 'O', () => sb.Append('Ö') },
+                { 'S', () => sb.Append('Ş') },
+                { 'U', () => sb.Append('Ü') }
+
+            };
 
 
+            for (char ch = 'A'; ch <= 'Z'; ch = (char)(ch + 1))
+            {
+                // X veya W harfi var ise bir sonraki döngüye geç
+                if (ch == 'W' || ch == 'X')
+                {
+                    continue;
+                }
 
+                sb.Append(ch);
+
+                if (turkishLetterAppendOperations.ContainsKey(ch))
+                {
+                    turkishLetterAppendOperations[ch].Invoke();
+                }
+
+                //switch (ch)
+                //{
+                //    case 'C':
+                //        sb.Append('Ç');
+                //        break;
+
+                //    case 'G':
+                //        sb.Append('Ğ');
+                //        break;
+
+                //    case 'I':
+                //        sb.Append('İ');
+                //        break;
+                //}
+            }
+
+            return sb.ToString();
+        }
+
+        public static string GetTurkishLowerCaseLetters()
+        {
+
+            StringBuilder sb = new StringBuilder();
+
+            Dictionary<char, Action> turkishLetterAppendOperations = new()
+            {
+                { 'c', () => sb.Append('ç') },
+                { 'g', () => sb.Append('ğ') },
+                { 'i', () => sb.Insert(0, 'ı') },
+                { 'o', () => sb.Append('ö') },
+                { 's', () => sb.Append('ş') },
+                { 'u', () => sb.Append('ü') }
+
+            };
+
+
+            for (char ch = 'a'; ch <= 'z'; ch = (char)(ch + 1))
+            {
+                // X veya W harfi var ise bir sonraki döngüye geç
+                if (ch == 'w' || ch == 'x')
+                {
+                    continue;
+                }
+
+                sb.Append(ch);
+
+                if (turkishLetterAppendOperations.ContainsKey(ch))
+                {
+                    turkishLetterAppendOperations[ch].Invoke();
+                }
+
+
+            }
+
+            return sb.ToString();
+        }
+
+        public static int GetAlphabetLetterCount()
+        {
+
+            return ('z' - 'a') + 1;
+        }
+
+        public static int GetBookletNumber(string bookletGroup)
+        {
+
+            int letterCount = GetAlphabetLetterCount();
+            int sumOfBookletNo = 0;
+            int j = bookletGroup.Length - 1;
+
+            foreach (char bookletGroupCh in bookletGroup)
+            {
+                int bookletNo = (bookletGroupCh - 'A') + 1;
+                sumOfBookletNo += (letterCount.Pow(j) * bookletNo);
+
+                j--;
+            }
+
+            return sumOfBookletNo;
+
+        }
+
+        public static string GetBookletGroup(int bookletNo)
+        {
+            int letterCount = GetAlphabetLetterCount();
+            StringBuilder sb = new StringBuilder();
+            int n;
+
+            for (n = bookletNo; n % letterCount != 0; n /= letterCount)
+            {
+                int islenecekSayi = n % letterCount;
+
+                char ch = (char)(islenecekSayi + ('A' - 1));
+                sb.Insert(0, ch);
+            }
+
+            if (n > 0)
+            {
+                int currentBookletNo = n;
+
+                for (n = currentBookletNo; n > 1; n /= letterCount)
+                {
+                    int islenecekSayi = (n % letterCount) == 0 ? letterCount : (n % letterCount) - 1;
+
+                    char ch = (char)(islenecekSayi + ('A' - 1));
+                    sb.Insert(0, ch);
+                } 
+            }
+
+
+            return sb.ToString();
+        }
+
+        public static string ToHexaString(int num)
+        {
+
+            Dictionary<int, char> dicHexaChars = new()
+            {
+                { 10, 'A' },
+                { 11, 'B' },
+                { 12, 'C' },
+                { 13, 'D' },
+                { 14, 'E' },
+                { 15, 'F' },
+
+            };
+
+            int sonuc = 0;
+            int kuvvet = 0;
+            long n;
+            const byte taban = 16;
+
+
+            StringBuilder sbHexaString = new StringBuilder();
+
+
+            for (n = num; n >= taban; n /= taban)
+            {
+                sonuc = ((int)(n % taban) * 10.Pow(kuvvet));
+
+                if (sonuc >= 10)
+                {
+                    sbHexaString.Insert(0, dicHexaChars[sonuc]);
+                }
+
+                else
+                {
+                    sbHexaString.Insert(0, sonuc);
+
+                }
+
+            }
+
+            sonuc = ((int)n * 10.Pow(kuvvet));
+
+            if (sonuc >= 10)
+            {
+                sbHexaString.Insert(0, dicHexaChars[sonuc]);
+            }
+
+            else
+            {
+                sbHexaString.Insert(0, sonuc);
+
+            }
+
+            return sbHexaString.ToString();
+        }
     }
 }

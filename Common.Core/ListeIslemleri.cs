@@ -193,13 +193,13 @@ namespace Common.Core
 
         //}
 
-        public static bool IsOrdered<T>(IEnumerable list) where T : IComparable
+        public static bool IsOrdered<T>(IEnumerable<T> list) where T : IComparable
         {
-            List<T> arr = ((IEnumerable<T>)list).ToList();
+            //List<T> arr = ((IEnumerable<T>)list).ToList();
 
-            for (int i = 1; i < arr.Count; i++)
+            for (int i = 1; i < list.Count(); i++)
             {
-                if (arr[i].CompareTo(arr[i - 1]) == -1)
+                if (list.ElementAt(i).CompareTo(list.ElementAt(i - 1)) == -1)
                 {
                     return false;
                 }
@@ -227,12 +227,10 @@ namespace Common.Core
 
         public static bool SequentialEqual<T>(IEnumerable<T> liste1, IEnumerable<T> liste2)
         {
-            T[] arr1 = (liste1 is T[]) ? (T[])liste1 : liste1.ToArray();
-
             int i = 0;
             foreach (var item2 in liste2)
             {
-                if (!item2.Equals(arr1[i]))
+                if (!item2.Equals(liste1.ElementAt(i)))
                 {
                     return false;
                 }

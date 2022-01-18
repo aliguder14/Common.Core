@@ -1,13 +1,25 @@
 ﻿using Common.Core.DigitArr;
+using Common.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Common.Core.Test
 {
-    public class UnitTest1
+    public class CommonCoreTest
     {
+
+        private readonly DateTime _dt;
+        private Point _point;
+        private readonly ITestOutputHelper _output;
+
+        public CommonCoreTest(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Theory]
         [InlineData(45)]
         [InlineData(51)]
@@ -18,9 +30,49 @@ namespace Common.Core.Test
             DigitArr<int> digitArr3 = digitArr + digitArr2;
             System.Console.WriteLine(digitArr.Value);
 
+            
+            DateTime dt2 = _dt.AddDays(1);
+
+            
+          
+
             string st = pangrams(@"We promptly judged antique ivory buckles for the next prize");
 
             int gecisSayisi =pageCount(6, 2);
+        }
+
+
+        [Theory]
+        [InlineData(45,4,true)]
+        [InlineData(4629,46,true)]
+        [InlineData(5412,55,false)]
+        public void TestNumberStartWith(int num, int startedNumber, bool expected)
+        {
+            Assert.Equal(expected,(num.StartWith(startedNumber)));
+        }
+
+        [Theory]
+        [InlineData(45, 5, true)]
+        [InlineData(4629, 29, true)]
+        [InlineData(5412, 12, true)]
+        public void TestNumberEndWith(int num, int endedNumber, bool expected)
+        {
+            Assert.Equal(expected, (num.EndWith(endedNumber)));
+        }
+
+        [Theory]
+        [InlineData(16,"10")]
+        [InlineData(42, "2A")]
+        [InlineData(59, "3b")]
+        private string TestToHexaString(int decimalNum, string expected)
+        {
+            string actualResult = StringIslemleri.ToHexaString(decimalNum);
+            Assert.Equal(expected, actualResult,ignoreCase:true);
+            uint num1 =4294967294;
+            uint invertedNum = ~num1;
+
+
+            return actualResult;
         }
 
 
@@ -37,9 +89,11 @@ namespace Common.Core.Test
             }
 
             miniMaxSum(new List<int> { 1, 2, 3, 4, 5 });
-
-            ulong sayi = 342432;
-            long sayi2 = Convert.ToInt64((~sayi));
+            _point.X = 5;
+            _point = new Point();
+            int num = new int();
+            _output.WriteLine($" Alğın üzüm şişe X = {_point.X}");
+            
 
         }
 
@@ -184,6 +238,12 @@ namespace Common.Core.Test
         public static string twoArrays(int k, List<int> A, List<int> B)
         {
 
+            int[] arr = { 2,6,5};
+
+            int vl = arr[5];
+
+            
+
             int sum1 = A.Sum();
             int sum2 = B.Sum();
 
@@ -315,5 +375,75 @@ namespace Common.Core.Test
 
         }
 
+        [Theory]
+        [InlineData("AZ",52)]
+        [InlineData("AA",27)]
+        public void TestGettingGetBookletNo(string bookletGroup,int expectedBookletNo)
+        {
+
+            int actualBookletNo = StringIslemleri.GetBookletNumber(bookletGroup);
+
+            Assert.Equal(expectedBookletNo, actualBookletNo);
+        }
+
+        [Theory]
+        [InlineData(9, 2,1001)]
+        [InlineData(11,2, 1011)]
+        public static void TestFromDecimalToOtherPlaces(int decimalNumber,int otherBase, long expectedResult)
+        {
+
+            long actualResult = SayisalIslemlerHelper.FromDecimalToOtherPlaces(decimalNumber, otherBase);
+
+            Assert.Equal(expectedResult, actualResult);
+
+        }
+
+        [Theory]
+        [InlineData(26,"Z")]
+        [InlineData(28,"AB")]
+        [InlineData(54,"BB")]
+        [InlineData(677,"ZA")]
+        public string TestGetBookletGroup(int bookletNo, string expectedBookletGroup)
+        {
+
+            string actualBookletGroup = StringIslemleri.GetBookletGroup(bookletNo);
+            Assert.Equal(expectedBookletGroup, actualBookletGroup);
+            _output.WriteLine(Sekil.Dortgen.ToString());
+            return "Sonuç";
+        }
+
+        [Theory]
+        [InlineData("15895049348",true)]
+        [InlineData("11111111111", false)]
+        [InlineData("61185345294", true)]
+        [InlineData("15805049348", false)]
+        [InlineData("15895049349", false)]
+        [InlineData("10000000000", false)]
+        [InlineData("1580504934a", false)]
+
+        public void ValidTCKN(string tckn, bool expectedValue)
+        {
+            Assert.Equal(expectedValue,ValidationIslemleri.ValidTCKN(tckn));
+        }
+
+        [Theory]
+        [InlineData(15895049348, true)]
+        [InlineData(11111111111, false)]
+        [InlineData(61185345294, true)]
+        [InlineData(15805049348, false)]
+        [InlineData(15895049349, false)]
+        [InlineData(10000000000, false)]
+
+        public void ValidLongTCKN(long tckn, bool expectedValue)
+        {
+            Assert.Equal(expectedValue, ValidationIslemleri.ValidTCKN(tckn));
+        }
+
+
+        public enum Sekil
+        {
+            Ucgen=1,
+            Dortgen = 2
+        }
     }
 }

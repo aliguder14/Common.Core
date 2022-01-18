@@ -6,6 +6,15 @@
     <Company>Ali GÜDER</Company>
     <Authors>Ali GÜDER</Authors>
     <Description>.Net ile ilgili temel işlemler</Description>
+    <Copyright>2022</Copyright>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
+    <FileVersion>1.0.0.1</FileVersion>
+    <Version>1.0.1</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Inferno" Version="1.6.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
 
 </Project>

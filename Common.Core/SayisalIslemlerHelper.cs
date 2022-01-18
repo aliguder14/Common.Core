@@ -132,23 +132,23 @@ namespace Common.Core
 
         }
 
-        public BigInteger FaktoriyelAl(int num)
+        public BigInteger Factoriel(int num)
         {
             if (num == 0 || num == 1)
             {
                 return 1;
             }
 
-            BigInteger sonuc = 1;
+            BigInteger result = 1;
             for (int i = 2; i <= num; i++)
             {
-                sonuc *= i;
+                result *= i;
             }
 
-            return sonuc;
+            return result;
         }
 
-        public static int AsalSayiMi(long n)
+        public static int IsPrime(long n)
         {
             if (n == 0 || n == 1)
             {
@@ -206,19 +206,19 @@ namespace Common.Core
             return false;
         }
 
-        public double KuvvetAl(double num, double kuvvet)
+        public double Pow(double num, double power)
         {
 
-            if (kuvvet == 0)
+            if (power == 0)
             {
                 return 1;
             }
 
-            num = kuvvet < 0 ? 1 / num : num;
+            num = power < 0 ? 1 / num : num;
 
             double sonuc = num;
 
-            for (long i = 2; i <= kuvvet; i++)
+            for (long i = 2; i <= power; i++)
             {
                 sonuc *= num;
             }
@@ -227,7 +227,7 @@ namespace Common.Core
         }
 
 
-        public decimal MutlakDegerAl(decimal num)
+        public decimal Absolute(decimal num)
         {
 
             if (num < 0)
@@ -348,7 +348,7 @@ namespace Common.Core
 
 
 
-        public static long OndalikTabanaCevir(long num, int taban)
+        public static long ToDecimalPlces(long num, int taban)
         {
 
             long sonuc = 0;
@@ -363,7 +363,7 @@ namespace Common.Core
             return sonuc;
         }
 
-        public static long OndalikTabandanGelenTabanaCevir(long num, int taban)
+        public static long FromDecimalToOtherPlaces(long num, int taban)
         {
             if (taban == 1)
             {
@@ -381,10 +381,19 @@ namespace Common.Core
                 kuvvet++;
             }
 
-            sonuc += ((n / taban) * (long)Math.Pow(10, kuvvet));
+            sonuc += (n * (long)Math.Pow(10, kuvvet));
 
             return sonuc;
         }
+
+
+        public static long FromCurrentPlaceToOtherPlace(long num, int thisBase, int otherBase)
+        {
+            long decimalResult = ToDecimalPlces(num, thisBase);
+
+            return FromDecimalToOtherPlaces(decimalResult,otherBase);
+        }
+
 
         public static double LogaritmaAl(double sayi, double tabanSayi)
         {
@@ -638,7 +647,34 @@ namespace Common.Core
             return sonuc;
         }
 
+        public static long HexaToDecimal(string hexaStr)
+        {
+            int kuvvet = hexaStr.Length - 1;
+            int resultDecimal = 0;
 
+            foreach (char hexaChar in hexaStr)
+            {
+
+                if (hexaChar >= '0' && hexaChar <= '9')
+                {
+                    resultDecimal += (hexaChar - '0') * 16.Pow(kuvvet);
+                }
+
+                else if (hexaChar >= 'A' && hexaChar <= 'F')
+                {
+                    resultDecimal += (hexaChar - 'A' + 10) * 16.Pow(kuvvet);
+                }
+
+                else
+                {
+                    throw new Exception("Format Exception");
+                }
+
+                kuvvet--;
+            }
+
+            return resultDecimal;
+        }
     }
 
     public class OpertorComparer : Comparer<char>

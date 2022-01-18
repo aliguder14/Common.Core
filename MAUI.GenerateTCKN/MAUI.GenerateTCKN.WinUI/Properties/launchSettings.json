@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "MAUI.GenerateTCKN.WinUI": {
+      "commandName": "AppContainer"
+    }
+  }
+}
