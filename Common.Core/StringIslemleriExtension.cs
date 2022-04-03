@@ -34,6 +34,7 @@ namespace Common.Core
         {
             StringBuilder sb = new StringBuilder(str);
             sb.Append(strItem);
+
             return sb.ToString();
 
         }

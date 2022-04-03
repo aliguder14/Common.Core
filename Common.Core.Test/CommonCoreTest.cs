@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
+using java.lang;
 
 namespace Common.Core.Test
 {
@@ -208,7 +209,7 @@ namespace Common.Core.Test
                 j--;
             }
 
-            return Math.Abs(sum1 - sum2);
+            return System.Math.Abs(sum1 - sum2);
 
 
         }
@@ -298,7 +299,12 @@ namespace Common.Core.Test
                 }
             }
 
-            return (int)Math.Min(gecis1, gecis2);
+
+            List<int> list = new List<int>() {73,67,38,33 };
+
+            HackerRankTest.gradingStudents(list);
+
+            return (int)System.Math.Min(gecis1, gecis2);
         }
 
         public static int countPairs(List<int> numbers, int k)
@@ -340,8 +346,8 @@ namespace Common.Core.Test
             
 
 
-            //long toplam = (long)Math.Pow((x[x.Count - 1] - y[y.Count - 1]), 2) +
-            //    (long)Math.Pow((y[y.Count - 1] - y[y.Count - 2]), 2);
+            //long toplam = (long)System.Math.Pow((x[x.Count - 1] - y[y.Count - 1]), 2) +
+            //    (long)System.Math.Pow((y[y.Count - 1] - y[y.Count - 2]), 2);
 
             List<int> farklar = new List<int>();
             
@@ -349,7 +355,7 @@ namespace Common.Core.Test
             {
                 if (i != 0)
                 {
-                    int fark = Math.Abs(x[i] - x[i - 1]);
+                    int fark = System.Math.Abs(x[i] - x[i - 1]);
                     farklar.Add(fark);
                 }
             }
@@ -362,7 +368,7 @@ namespace Common.Core.Test
             {
                 if (i != 0)
                 {
-                    int fark = Math.Abs(y[i] - y[i - 1]);
+                    int fark = System.Math.Abs(y[i] - y[i - 1]);
                     farklar.Add(fark);
                 }
             }
@@ -370,8 +376,8 @@ namespace Common.Core.Test
             int İkinciMinimumFark = farklar.Min();
 
 
-            return (long)Math.Pow(ilkMinimumFark, 2) +
-                (long)Math.Pow(İkinciMinimumFark, 2);
+            return (long)System.Math.Pow(ilkMinimumFark, 2) +
+                (long)System.Math.Pow(İkinciMinimumFark, 2);
 
         }
 
@@ -405,6 +411,7 @@ namespace Common.Core.Test
         [InlineData(677,"ZA")]
         public string TestGetBookletGroup(int bookletNo, string expectedBookletGroup)
         {
+            StringBuffer strbuff = new StringBuffer("Dark");
 
             string actualBookletGroup = StringIslemleri.GetBookletGroup(bookletNo);
             Assert.Equal(expectedBookletGroup, actualBookletGroup);
@@ -425,6 +432,21 @@ namespace Common.Core.Test
         {
             Assert.Equal(expectedValue,ValidationIslemleri.ValidTCKN(tckn));
 
+            string st = HackerRankTest.pangrams("We promptly judged antique ivory buckles for the next prize");
+
+            List<List<int>> scheduleList = new List<List<int>>()
+            {
+
+                new List<int>(){0,1},
+                new List<int>(){3,5},
+                new List<int>(){4,8 }
+            };
+
+            List<List<int>> mergedList = HackerRankTest.MergeSchedule(scheduleList);
+
+
+
+
         }
 
         [Theory]
@@ -440,7 +462,76 @@ namespace Common.Core.Test
             Assert.Equal(expectedValue, ValidationIslemleri.ValidTCKN(tckn));
 
         }
+        public static string[] UniqueNames(string[] names1, string[] names2)
+        {
+            IEnumerable<string> uniqueNames = names1.Union(names2);
+            return uniqueNames.ToArray();
+        }
 
+        //[Theory]
+        //[InlineData("11.12.2021", Td1)]
+        //[InlineData("11.12.2021", new TurkishDateTime(11,12,2021))]
+        //public void TestTurkishDateTime(string strDateTime,TurkishDateTime tdt)
+        //{
+
+        //}
+
+
+        [Theory]
+        [InlineData("  Ali GÜDER", "Ali GÜDER")]
+        [InlineData("  Bilgisayar Çantası", "Bilgisayar Çantası")]
+        [InlineData("  Bilgisayar Çantası", "Bilgisayar Çantası ")]
+        public void TestTrim(string inputStr, string expectedStr)
+        {
+           Assert.Equal(expectedStr,StringIslemleri.Trim(inputStr));
+        }
+
+
+
+        public static IEnumerable<object[]> NumberList =>
+       new List<object[]>
+       {
+            new object[] { 3, new List<int> { 100, 200, 300, 350, 400, 401, 402 } }
+           
+       };
+
+       
+
+
+
+
+        [Theory]
+        [MemberData(nameof(NumberList))]
+        public void TestMaxMinDifference(int k, List<int> arr)
+        {
+            var resut= HackerRankTest.maxMin(k, arr);
+
+            Assert.Equal(k, resut);
+
+
+        }
+
+
+        public static IEnumerable<object[]> StringList =>
+     new List<object[]>
+     {
+            new object[] {new List<string> { "eibjbwsp", "ptfxehaq", "jxipvfga", "rkefiyub", "kalwfhfj", "lktajiaq", "srdgoros", "nflvjznh" } }
+
+     };
+
+
+
+
+
+        [Theory]
+        [MemberData(nameof(StringList))]
+        public void TestGridChallenge(List<string> arr)
+        {
+            var result = HackerRankTest.gridChallenge(arr);
+
+            Assert.Equal("YES", result);
+
+        }
 
         public enum Sekil
         {
@@ -448,4 +539,6 @@ namespace Common.Core.Test
             Dortgen = 2
         }
     }
+
+    
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +30,7 @@ namespace Common.Core
         public static int ToIntManually(this char ch)
         {
 
-            return 0 - ch;
+            return ch -'0';
 
         }
 
@@ -45,13 +46,13 @@ namespace Common.Core
 
                 if (digit >= 0 && digit <= 9)
                 {
-                    result += (digit * (int)Math.Pow(10, sifirSayisi));
+                    result += digit * (int)Math.Pow(10, sifirSayisi);
                     sifirSayisi--;
                 }
 
                 else
                 {
-                    return 0;
+                    throw new FormatException("Invalid Format for convertion");
                 }
             }
 
@@ -64,6 +65,18 @@ namespace Common.Core
 
             return (char)('0' + digit);
            
+        }
+
+        public static DateTime ToDateTime(this string strDateTime)
+        {
+
+            return Convert.ToDateTime(strDateTime);
+        }
+
+        public static DateTime ToDateTime(this string strDateTime, CultureInfo cultureInfo)
+        {
+
+            return Convert.ToDateTime(strDateTime,cultureInfo);
         }
 
     }

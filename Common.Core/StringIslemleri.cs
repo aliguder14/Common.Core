@@ -837,5 +837,100 @@ namespace Common.Core
 
             return sbHexaString.ToString();
         }
+
+        public static string Trim(string st)
+        {
+
+            int j=st.Length-1;
+            int startIndex =0;
+            int endIndex = 0;
+            int i=0;
+
+            while (st[i] == ' ')
+            {
+                i++;
+            }
+
+            startIndex = i;
+
+            while (st[j] == ' ')
+            {
+                j--;
+            }
+
+            endIndex = j;
+
+            if (i== 0 && j == 0)
+            {
+                return st;
+
+            }
+
+            else
+            {
+                return st.Substring(startIndex, endIndex - startIndex + 1);
+            }
+
+        }
+
+        public static string ToTitleCase(string str)
+        {
+
+            char[] chars = str.ToCharArray();
+            bool firstLetterFound = false;
+            bool firstSpacesFound = false;
+            char[] spaceChars = { ' ','\n','\r','\t'};
+
+            for (int i = 0; i < chars.Length; i++)
+            {
+                char ch = chars[i];
+                
+                if (spaceChars.Contains(ch))
+                {
+                    firstLetterFound = false;
+                }
+                
+                
+                else if (char.IsLetter(ch) && !firstLetterFound)
+                {
+                    chars[i] = char.ToUpper(ch);
+                    firstLetterFound = true;
+                }
+
+
+            }
+
+            return new string(chars);
+        }
+
+        public string ConcatWithBuilder(params string[] strings)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (string s in strings)
+            {
+                sb.Append(s);
+            }
+
+            return sb.ToString();
+        }
+
+        public string Concat(params string[] strings)
+        {
+
+            int totalStringLength = strings.Sum(s=>s.Length);
+            char[] newCharArr = new char[totalStringLength];
+
+            for (int i = 0; i < strings.Length; i++)
+            {
+                for (int j = 0; j < strings[i].Length; j++)
+                {
+                    newCharArr[j] = strings[i][j];
+                }
+            }
+
+            return new string(newCharArr);
+
+        }
     }
 }

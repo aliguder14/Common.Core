@@ -24,7 +24,7 @@ namespace Common.Core
         }
 
 
-        public static void AddRAnge<T>(List<T> liste, List<T> rangeListe)
+        public static void AddRAnge<T>(ICollection<T> liste, ICollection<T> rangeListe)
         {
 
             foreach (var range in rangeListe)
@@ -70,9 +70,9 @@ namespace Common.Core
         }
 
 
-        public static double Max(List<double> liste)
+        public static double Max(IEnumerable<double> liste)
         {
-            double max = liste[0];
+            double max = liste.ElementAt(0);
             foreach (var deger in liste)
             {
                 if (deger > max)
@@ -84,9 +84,9 @@ namespace Common.Core
             return max;
         }
 
-        public static double Min(List<double> liste)
+        public static double Min(IEnumerable<double> liste)
         {
-            double min = liste[0];
+            double min = liste.ElementAt(0);
 
             foreach (var deger in liste)
             {
@@ -112,86 +112,6 @@ namespace Common.Core
             arr[birinciIndex] = temp;
 
         }
-
-        //public static bool IsOrdered(IEnumerable<double> list)
-        //{
-        //    double[]  arr = list.ToArray();
-
-        //    for (int i = 1; i < arr.Length; i++)
-        //    {
-        //        if (arr[i] < arr[i-1])
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-
-        //}
-
-        //public static bool IsOrdered(IEnumerable<string> list)
-        //{
-        //    string[] arr = list.ToArray();
-
-        //    for (int i = 1; i < arr.Length; i++)
-        //    {
-        //        if (arr[i].CompareTo(arr[i - 1]) == -1)
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-
-        //}
-
-        //public static bool IsOrdered(IEnumerable<char> list)
-        //{
-        //    char[] arr = list.ToArray();
-
-        //    for (int i = 1; i < arr.Length; i++)
-        //    {
-        //        if (arr[i] < arr[i - 1])
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-
-        //}
-
-        //public static bool IsOrdered(IEnumerable<int> list)
-        //{
-        //    int[] arr = list.ToArray();
-
-        //    for (int i = 1; i < arr.Length; i++)
-        //    {
-        //        if (arr[i] < arr[i - 1])
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-
-        //}
-
-        //public static bool IsOrdered(IEnumerable<DateTime> list)
-        //{
-        //    DateTime[] arr = list.ToArray();
-
-        //    for (int i = 1; i < arr.Length; i++)
-        //    {
-        //        if (arr[i] < arr[i - 1])
-        //        {
-        //            return false;
-        //        }
-        //    }
-
-        //    return true;
-
-        //}
 
         public static bool IsOrdered<T>(IEnumerable<T> list) where T : IComparable
         {
@@ -225,9 +145,27 @@ namespace Common.Core
             return true;
         }
 
+        public static bool IsNullOrEmpty<T>(IEnumerable<T> list)
+        {
+
+            if (list == null || list.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
         public static bool SequentialEqual<T>(IEnumerable<T> liste1, IEnumerable<T> liste2)
         {
             int i = 0;
+
+            if (liste1.Count() != liste2.Count())
+            {
+                return false;
+            }
+
             foreach (var item2 in liste2)
             {
                 if (!item2.Equals(liste1.ElementAt(i)))
@@ -243,8 +181,7 @@ namespace Common.Core
 
         public static ObservableCollection<T> ToObservable<T>(IEnumerable<T> liste1)
         {
-            var observableListe = new ObservableCollection<T>(liste1);
-            return observableListe;
+            return new ObservableCollection<T>(liste1);
         }
 
         public static decimal MaksimumRepeatedNumber<T>(IEnumerable<decimal> liste)

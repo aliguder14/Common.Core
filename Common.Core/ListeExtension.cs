@@ -194,6 +194,12 @@ namespace Common.Core
                         {
                             property.SetValue(item, dataRow[dataColumn.ColumnName]);
                         }
+
+                        //if (property.PropertyType == dataColumn.DataType)
+                        //{
+                        //    property.SetValue(item, dataRow[dataColumn.ColumnName]);
+                        //}
+
                     }
                 }
 
@@ -201,6 +207,42 @@ namespace Common.Core
             }
 
             return liste;
+        }
+
+
+        public static T[] ToArray<T>(this DataTable dt)
+        {
+            if (dt.Columns.Count <= 0 || dt.Rows.Count <= 0)
+            {
+                return new T[0];
+            }
+
+            T[] arr = new T[dt.Rows.Count];
+            int i = 0;
+            IEnumerable<PropertyInfo> propertyInfos = typeof(T).GetProperties().Where(x => x.CanWrite);
+
+            foreach (DataRow dataRow in dt.Rows)
+            {
+                T item = Activator.CreateInstance<T>();
+
+                foreach (DataColumn dataColumn in dt.Columns)
+                {
+                    var property = propertyInfos.Where(x => x.Name == dataColumn.ColumnName).FirstOrDefault();
+
+                    if (property != null)
+                    {
+                        if (property.PropertyType == dataRow[dataColumn.ColumnName].GetType())
+                        {
+                            property.SetValue(item, dataRow[dataColumn.ColumnName]);
+                        }
+                    }
+                }
+
+                arr[i] = item;
+                i++;
+            }
+
+            return arr;
         }
 
         public static List<T> ToList<T>(this DbDataAdapter adapter)
@@ -238,5 +280,141 @@ namespace Common.Core
                 }
             }
         }
+
+        public static T FirstOrDefault<T>(this IEnumerable<T> list)
+        {
+            if (!list.IsNullOrEmpty())
+            {
+                IEnumerator<T> enumerator = list.GetEnumerator();
+                enumerator.MoveNext();
+
+                return enumerator.Current; 
+            }
+
+            else
+            {
+                return default(T);
+            }
+        }
+
+        public static T FirstOrDefault<T>(this IEnumerable<T> list, Predicate<T> whereClause)
+        {
+            foreach (var item in list)
+            {
+                if (whereClause(item))
+                {
+                    return item;
+                }
+            }
+
+            return default(T);
+
+        }
+
+        public static bool Any<T>(this IEnumerable<T> list, Predicate<T> whereClause)
+        {
+            foreach (var item in list)
+            {
+                if (whereClause(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+
+        }
+
+        public static bool All<T>(this IEnumerable<T> list, Predicate<T> whereClause)
+        {
+            foreach (var item in list)
+            {
+                if (!whereClause(item))
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+
+        }
+
+        public static void BubbleSort<T>(this IList<T> list) where T : IComparable
+        {
+
+            
+            int listCount = list.Count;
+            for (int i = 0; i < listCount - 1; i++)
+            {
+                bool sorted = true;
+                for (int j = 1; j < listCount; j++)
+                {
+                    // if list[j-1] > list[j]
+                    if (list[j - 1].CompareTo(list[j]) == 1)
+                    {
+                        T temp = list[j];
+                        list[j] = list[j - 1];
+                        list[j - 1] = temp;
+                        sorted = false;
+                    } 
+                }
+
+                if (sorted)
+                {
+                    break;
+                }
+            }
+        }
+
+        public static void BubbleSort<T>(this T[] arr) where T : IComparable
+        {
+
+            int arrLength = arr.Length;
+            bool sorted = false;
+
+            for (int i = 0; sorted == false; i++)
+            {
+                sorted = true;
+                for (int j = 1; j < arrLength; j++)
+                {
+                    // if arr[j-1] > arr[j]
+                    if (arr[j - 1].CompareTo(arr[j]) == 1)
+                    {
+                        T temp = arr[j];
+                        arr[j] = arr[j - 1];
+                        arr[j - 1] = temp;
+                        sorted = false;
+                    }
+                }
+
+                if (sorted)
+                {
+                    break;
+                }
+            }
+        }
+
+        //public static bool FindByBinarySearch<T>(this IList<T> col, T searchedElement) where T: IEquatable<T>, IComparable
+        //{
+            
+        //    IList<T> sortedCol = col.OrderBy(x=>x).ToList();
+        //    int medianIndex = sortedCol.Count / 2 - 1;
+        //    T medianElement = sortedCol[medianIndex];
+
+        //    if (searchedElement.CompareTo(medianElement) == 0)
+        //    {
+        //        return true;
+        //    }
+
+        //    else
+        //    {
+
+        //    }
+
+
+        //}
+
+        
+
     }
 }
