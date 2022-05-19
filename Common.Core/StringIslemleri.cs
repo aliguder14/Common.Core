@@ -38,8 +38,6 @@ namespace Common.Core
 
             foreach (char ch in metin)
             {
-                //int rakamDegeri = ch - '0';
-
                 if (ch < '0' || ch > '9')
                 {
                     return false;
